@@ -7,6 +7,7 @@ import { User } from '../users/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RegisterUserDto } from './dto/register.user.dto';
+import { Utils } from '../shared/utils';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +33,8 @@ export class AuthService {
     return user;
   }
 
-  async login(phoneNumber: string): Promise<string> {
+  async login(phoneNumber: string): Promise<{ message: string }> {
+    phoneNumber = Utils.formatPhoneNumber(phoneNumber);
     const user = await this.userModel.findOne({ phoneNumber });
     if (!user) {
       throw new NotFoundException('error.noUserFound');
@@ -46,6 +48,8 @@ export class AuthService {
 
     await user.save();
 
-    return 'success.otpSent';
+    return {
+      message: 'success.otpSent',
+    };
   }
 }
