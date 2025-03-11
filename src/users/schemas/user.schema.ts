@@ -14,6 +14,12 @@ export class User extends Document {
 
   @Prop({ required: true, unique: true })
   phoneNumber: string;
+
+  @Prop({ required: false })
+  otp?: string;
+
+  @Prop({ required: false })
+  otpExpiresAt?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
