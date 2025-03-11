@@ -34,7 +34,11 @@ export class AuthService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new InternalServerErrorException('Failed to fetch user');
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(
+        `Failed to register user: ${errorMessage}`,
+      );
     }
   }
 }
