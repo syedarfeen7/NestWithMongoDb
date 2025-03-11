@@ -7,7 +7,7 @@ import {
 import { User } from '../users/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RegisterDto } from 'src/auth/dto/register.dto';
+import { RegisterUserDto } from './dto/register.user.dto';
 
 @Injectable()
 export class AuthService {
@@ -15,9 +15,9 @@ export class AuthService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async register(registerDto: RegisterDto): Promise<User> {
+  async register(registerUserDto: RegisterUserDto): Promise<User> {
     try {
-      const { phoneNumber } = registerDto;
+      const { phoneNumber } = registerUserDto;
       const existingUser = await this.userModel
         .findOne({
           phoneNumber,
@@ -28,7 +28,7 @@ export class AuthService {
           `User with phone number ${phoneNumber} is already exist`,
         );
       }
-      const user = await this.userModel.create(registerDto);
+      const user = await this.userModel.create(registerUserDto);
       return user;
     } catch (error) {
       if (error instanceof NotFoundException) {
