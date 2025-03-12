@@ -52,4 +52,34 @@ export class AuthService {
       message: 'success.otpSent',
     };
   }
+
+  async otpVerification({
+    otp,
+    phoneNumber,
+  }: {
+    otp: string;
+    phoneNumber: string;
+  }): Promise<User> {
+    phoneNumber = Utils.formatPhoneNumber(phoneNumber);
+
+    const user = await this.userModel.findOne({ phoneNumber });
+
+    if (!user) throw new NotFoundException('error.noUserFound');
+
+    if (user?.otp !== otp || !otp)
+      throw new NotFoundException('error.invalidOtp');
+
+    if (!user.otpExpiresAt || new Date() > user.otpExpiresAt) {
+      throw new NotFoundException({
+        message: 'error.otpExpired',
+      });
+    }
+
+    user.otp = undefined;
+    user.otpExpiresAt = undefined;
+
+    await user.save();
+
+    return user;
+  }
 }

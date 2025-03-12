@@ -14,4 +14,10 @@ export class AuthController {
   login(@Query('phoneNumber') phoneNumber: string) {
     return this.AuthService.login(phoneNumber);
   }
+
+  @Get('/otp-verification')
+  otpVerification(@Query() query: { otp: string; phoneNumber: string }) {
+    const { otp, phoneNumber } = query;
+    return this.AuthService.otpVerification({ phoneNumber, otp });
+  }
 }
