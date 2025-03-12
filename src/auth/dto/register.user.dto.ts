@@ -2,17 +2,17 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class RegisterUserDto {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'error.firstNameRequired' })
   firstName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'error.lastNameRequired' })
   lastName: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'error.invalidEmail' })
   email: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'error.phoneNumberRequired' })
   phoneNumber: string;
 }
