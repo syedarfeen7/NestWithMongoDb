@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class RegisterUserDto {
   @IsString()
@@ -15,4 +15,7 @@ export class RegisterUserDto {
   @IsString()
   @IsNotEmpty({ message: 'error.phoneNumberRequired' })
   phoneNumber: string;
+
+  @IsBoolean()
+  termsAccepted: boolean;
 }
