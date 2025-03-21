@@ -16,6 +16,9 @@ export class User extends Document {
   phoneNumber: string;
 
   @Prop({ required: false })
+  address: string;
+
+  @Prop({ required: false })
   otp?: string;
 
   @Prop({ required: false })

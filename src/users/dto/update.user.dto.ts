@@ -14,4 +14,12 @@ export class UpdateUserDto {
 
   @IsString()
   id?: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'error.phoneNumberRequired' })
+  phoneNumber: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'error.addressRequired' })
+  address: string;
 }
