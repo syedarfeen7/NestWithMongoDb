@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBase64,
+  IsEmail,
+  IsMongoId,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 
 export class UpdateUserDto {
   @IsString()
@@ -12,7 +18,7 @@ export class UpdateUserDto {
   @IsEmail({}, { message: 'error.invalidEmail' })
   email: string;
 
-  @IsString()
+  @IsMongoId()
   id?: string;
 
   @IsString()
@@ -22,4 +28,12 @@ export class UpdateUserDto {
   @IsString()
   @IsNotEmpty({ message: 'error.addressRequired' })
   address: string;
+}
+export class uploadImageDto {
+  @IsString()
+  @IsNotEmpty({ message: 'error.imageRequired' })
+  profileImage: string;
+
+  @IsMongoId()
+  id: string;
 }

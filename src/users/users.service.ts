@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UpdateUserDto } from './dto/update.user.dto';
+import { UpdateUserDto, uploadImageDto } from './dto/update.user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,6 +19,20 @@ export class UsersService {
     }
 
     Object.assign(user, updateUserDto);
+
+    await user.save();
+
+    return user;
+  }
+  async uploadImage(uploadImageDto: uploadImageDto): Promise<User> {
+    const { id } = uploadImageDto;
+
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new NotFoundException('error.userNotFound');
+    }
+
+    Object.assign(user, uploadImageDto);
 
     await user.save();
 
