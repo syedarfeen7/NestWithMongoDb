@@ -24,7 +24,7 @@ export class UsersService {
 
     return user;
   }
-  async uploadImage(uploadImageDto: uploadImageDto): Promise<User> {
+  async uploadImage(uploadImageDto: uploadImageDto): Promise<string> {
     const { id } = uploadImageDto;
 
     const user = await this.userModel.findById(id).exec();
@@ -36,7 +36,7 @@ export class UsersService {
 
     await user.save();
 
-    return user;
+    return user?.profileImage;
   }
   async findOne(id: string | undefined): Promise<User> {
     const user = await this.userModel.findById(id).exec();
