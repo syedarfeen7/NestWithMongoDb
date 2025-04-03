@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot(), // Load environment variables
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule.forRoot({ isGlobal: true })],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'), // Load URI from environment
       }),
