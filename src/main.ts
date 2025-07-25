@@ -16,6 +16,6 @@ async function bootstrap() {
   );
   app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(8082);
+  await app.listen(8080);
 }
 bootstrap();
